@@ -1,2 +1,2 @@
-aiyo
+Study Notes
 ====
