@@ -1,3 +1,30 @@
 去掉列值所有空格：RTRIM()
 别名： AS “word1 word2”, AS word
 计数： COUNT()包含NULL值，COUNT(column)不包含NULL值
+外部联结：A LEFT OUTER JOIN B ON A.a = B.b
+          A, B WHERE A.a *= B.b
+    similarly, =* <=> right outer join
+复制到新表： (oracle)SELECT * INTO newtable FROM oldtable
+             (mySQL) CREATE TABLE  newtable AS SELECT * FROM oldtable
+插入： INSERT INTO table VALUES(colnames) (values) 
+       INSERT INTO table(colnames) SELECT ...
+更新： UPDATE table SET colname = newvalue, colname2 = newvalue2 WHERE condition
+       ALTER TABLE： change table structure
+删除： DROP TABLE tablename(应当设定在关系删除前不容许删除表)
+视图： CREATE VIEW viewname AS SELECT ... FROM...WHERE...
+存储过程： CREATE PROCEDURE procedurename(returnval OUT returntype) IS  (other options: OUT, IN,INOUT)
+           BEGIN
+             ...
+             returnval:=..
+           END;
+
+           EXECUTE procedurename (parameters)
+事务处理transaction processing: BEGIN TRANSCTION
+                                do sth
+                                SAVE TRANSACTION savepoint1
+                                ....
+                                IF error happens ROLLBACK savepoint1
+                                ...
+                                COMMIT TRANSCTION
+
+http://wenku.baidu.com/view/6ea90540be1e650e52ea99ae.html
