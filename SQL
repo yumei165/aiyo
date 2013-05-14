@@ -26,5 +26,24 @@
                                 IF error happens ROLLBACK savepoint1
                                 ...
                                 COMMIT TRANSCTION
+游标cursor: used for viewing partial records 
+            DECLARE CURSOR  cursorname IS ...
+            OPEN CURSOR cursorname
+            CLOSE cursorname
+外键foreign key: used for constraining key values, in CREATE TABLE/ALTER TABLE, can prevent unsafe delete
+            REFERENCES othertable(refered key)
+
+索引index: used to speed up query, but will slow down insert/delete.
+            CREATE INDEX indexname
+            ON table(colname)
+触发器trigger: do extra work when manipulating on one table. In general, should use constraint instead if possible.
+            CREATE TRIGGER trigname
+            ON table
+            FOR [INSERT,DELETE,UPDATE..]
+            AS..SET...
+
+            
+
+
 
 http://wenku.baidu.com/view/6ea90540be1e650e52ea99ae.html
