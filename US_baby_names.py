@@ -47,7 +47,10 @@ pieces = []
 for year, group in names.groupby(['year', 'sex']):
     pieces.append(group.sort_index(by='births', ascending=False)[:1000])
     top1000 = pd.concat(pieces, ignore_index=True)
-    
+   
+#analyze name trend
+boys = top1000[top1000.sex == 'M']
+girls = top1000[top1000.sex == 'F']
 
 
 
