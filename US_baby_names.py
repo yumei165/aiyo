@@ -2,6 +2,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 #load data
 names1880 = pd.read_csv('names/yob1880.txt', names=['name', 'sex', 'births'])
@@ -51,7 +52,50 @@ for year, group in names.groupby(['year', 'sex']):
 #analyze name trend
 boys = top1000[top1000.sex == 'M']
 girls = top1000[top1000.sex == 'F']
+total_births = top1000.pivot_table('births', rows='year', cols='name', aggfunc=sum)
+subset = total_births[['John', 'Harry', 'Mary', 'Marilyn']]
+subset.plot(subplots=True, figsize=(12, 10), grid=False, title="Number of births per year")
+table = top1000.pivot_table('prop', rows='year', cols='sex', aggfunc=sum)
+table.plot(title='Sum of table1000.prop by year and sex', yticks=np.linspace(0, 1.2, 13), xticks=range(1880, 2020, 10))
+df = boys[boys.year == 2010]
+  #how many of the most popularnames it takes to reach 50%
+prop_cumsum = df.sort_index(by='prop', ascending=False).prop.cumsum()
+prop_cumsum.searchsorted(0.5)
+  #apply to all data
+def get_quantile_count(group, q=0.5):
+    group = group.sort_index(by='prop', ascending=False)
+    return group.prop.cumsum().searchsorted(q) + 1
+diversity = top1000.groupby(['year', 'sex']).apply(get_quantile_count)
+diversity = diversity.unstack('sex')
 
+# extract last letter from name column
+get_last_letter = lambda x: x[-1]
+last_letters = names.name.map(get_last_letter)
+last_letters.name = 'last_letter'
+table = names.pivot_table('births', rows=last_letters, cols=['sex', 'year'], aggfunc=sum)
+ #select 3 representative years
+subtable = table.reindex(columns=[1910, 1960, 2010], level='year')
+subtable.head()
+subtable.sum()
+letter_prop = subtable / subtable.sum().astype(float)
+fig, axes = plt.subplots(2, 1, figsize=(10, 8))
+letter_prop['M'].plot(kind='bar', rot=0, ax=axes[0], title='Male')
+letter_prop['F'].plot(kind='bar', rot=0, ax=axes[1], title='Female', legend=False)
+  #all years with last letter 'd'/'n'/'y'
+letter_prop = table / table.sum().astype(float)
+dny_ts = letter_prop.ix[['d', 'n', 'y'], 'M'].T
+dny_ts.plot()
+
+#boy names that become girl names(and vice versa)
+all_names = top1000.name.unique()
+mask = np.array(['lesl' in x.lower() for x in all_names])
+lesley_like = all_names[mask]
+ #analyze the name 'lesley'-like
+filtered = top1000[top1000.name.isin(lesley_like)]
+filtered.groupby('name').births.sum()
+table = filtered.pivot_table('births', rows='year', cols='sex', aggfunc='sum')
+table = table.div(table.sum(1), axis=0)
+table.plot(style={'M': 'k-', 'F': 'k--'})
 
 
 
