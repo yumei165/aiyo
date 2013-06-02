@@ -90,3 +90,23 @@ w(here): Print full stack trace with context at current position
  #in ipython
  %prun -l 7 -s cumulative run_experiment()
  %run -p -s cumulative cprof_example.py
+ #line-by-line profiling: line_profiler library
+ %lprun -f func1 -f func2 statement_to_profile
+ 
+15, ipython html notebook
+$ ipython notebook --pylab=inline
+#cloud notebook
+
+16, module dependency
+#modules are loaded only once by default, so if we modified a module imported earlier and want to use the updated:
+reload(some_lib)
+
+17, make class friendly
+def __repr__(self):
+   
+18, create multiple profile configurations
+ipython profile create secret_project
+$ ipython --profile=secret_project
+
+https://notebookcloud.appspot.com/login
+ 
