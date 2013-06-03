@@ -1,0 +1,62 @@
+Help:
+C-h c CommandName: short
+C-h k COmmandName: complete
+C-h f FunctionName
+C-h a: list commands with given keyword
+
+General:
+C-u n command: repeat command n times
+
+Switch Mode: 
+M-x fundamental/text-mode.  
+M-x auto-fill-mode(minor mode which enables word split between
+lines,this command switch it on and off). 
+C-h m: view doc on current mode.
+
+Format:
+C-x f 20: make each line 20 characters(default is 70)
+M-q: auto-fill the paragraph the cursor is in
+
+Edit text:
+C-v/M-v
+C-l: 
+C-d/k,M-d/k: delete char/line/word/sentence
+C-f/b/p/n/a/e, M-f/b/a/e
+C-space/@ C-w: delete in between
+M-</>: move to start/end of whole text
+C-y: un-kill the last killed text
+C-x u/C-_: undo
+M-x replace-string: string replacement
+C-s: search text(retype C-s to get next word)
+C-r: reverse search
+
+File:
+C-x [4] C-f: open file in current[other] window 
+
+Switch window(Tab):
+C-x 2: split into 2 windows
+C-x 1: kill all other windows
+C-x 0: kill current window
+C-x o: work in another window
+C-M-v: scroll another window
+C-x 4 C-f: open file in another window(4 means run the command in
+ another window)
+C-x C-b: list active buffers(tabs)
+C-x b filename: switch buffer
+C-x compare-windows: cursor moves to next different place
+
+Frame(Window):
+M-x make-frame: open a new frame
+M-x delete-frame: delete current frame
+
+Exit:
+C-g: exit command
+ESC ESC ESC: exit recursive editing level
+C-x C-c: exit Emacs
+C-z|fg/%emacs: suspend and resume Emacs:
+
+Save:
+M-x recover-file: Recover auto-saved file
+C-x C-s: save file
+C-x s: save buffer at your choice
+
