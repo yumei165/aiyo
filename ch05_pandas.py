@@ -50,5 +50,59 @@ frame3 = DataFrame(pop)  #in sorted order of key of inner dict
 DataFrame(pop, index=[2001, 2002, 2003])  #will match given index from pop
 frame3.index.name = 'year'; frame3.columns.name = 'state'; frame3.values; frame3.index(immutable)
 
+#2, Essential functionality
+#reindexing: index, fill_value, method, limit, copy(by default true), level
+obj = Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
+obj2 = obj.reindex(['a', 'b', 'c', 'd', 'e'], fill_value = 0)  #if no fill_value provided, will show NaN
+  #for time series fill, it's useful to use forward fill method 'ffill'
+obj3 = Series(['blue', 'purple', 'yellow'], index=[0, 2, 4])
+In [85]: obj3.reindex(range(6), method='ffill')
+Out[85]:
+0 blue
+1 blue
+2 purple
+3 purple
+4 yellow
+5 yellow
+
+  #for data frame: index and columns can both be reindexed(reindex is not rename!)
+frame = DataFrame(np.arange(9).reshape((3, 3)), index=['a', 'c', 'd'], columns=['Ohio', 'Texas', 'California'])
+frame.reindex(index=['a', 'b', 'c', 'd'], method='ffill', columns=['Ohio','Utah','California']) #Utah column will be NaN, or use fill_value = n.
+  #note: for label reindex, more succinctly to use .ix
+
+#drop entries
+  #for series
+obj.drop(['b','a'])
+  #for dataframe
+frame.drop(['a','c']), frame.drop('Ohio', axis = 1)
+
+#indexing, selection, filtering
+  #for series
+obj[1:4], obj[['b','a','c']] = 5, obj['b':'c'](*this is inclusive*)  #index and selection
+obj[obj < 2]
+  #for data frame
+frame[:2]
+frame[frame['Ohio']>3] #selection
+frame[frame < 5] = 0 #set value
+#selection with ix
+frame.ix['a',['Utah','Ohio']] <=> frame.ix['a',[1,0]]
+frame.ix[frame.Utah > 3, :1]
+frame.ix[2] <=> frame.ix['c']
+
+#3, Arithmetic and data alignment
+s1 = Series([7.3, -2.5, 3.4, 1.5], index=['a', 'c', 'd', 'e'])
+s2 = Series([-2.1, 3.6, -1.5, 4, 3.1], index=['a', 'c', 'e', 'f', 'g'])
+s1+s2 #'d','f','g' will have value NaN
+  #data frame similar. If need fill value:
+df1.add(df2, fill_value = 0)  #sub,div,mul
+
+#4, operations
+s1-s1[0] #delete first entry.
+  #can do frame - series: index of series matches columns of frame
 
 
+
+
+
+  
+  
